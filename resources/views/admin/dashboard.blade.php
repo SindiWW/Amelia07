@@ -6,7 +6,7 @@
       <title>Document</title>
 </head>
 <body>
-      
+<a class="nav-link" href="{{ route('siswa.index') }}">Data Siswa</a>     
 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementByid('logout-form').submit();">Logout</a>
 <from id="logout-form" action="{{ route('logout') }}" method="POST">
       @csrf
