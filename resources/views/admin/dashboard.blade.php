@@ -10,8 +10,7 @@
 <a class="nav-link" href="{{ route('siswa.index') }}">Data Siswa</a>  
 <a class="nav-link" href="{{ route('akun.index') }}">Data Akun</a>
 <a class="nav-link" href="{{ route('pelanggaran.index') }}">Data Pelanggaran</a>
-
-
+<a class="nav-link" href="{{ route('pelanggar.index') }}">Data Pelanggar</a>
 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementByid('logout-form').submit();">Logout</a>
 <from id="logout-form" action="{{ route('logout') }}" method="POST">
       @csrf
@@ -25,9 +24,83 @@
 @endif
 
 
+
+<h3>Jumlah Siswa {{ $jmlSiswas }}</h3>
+<h3>Jumlah Pelanggar {{ $jmlPelanggars }}</h3>
+<br><br><br>
+
+
+
+<h1>Top 10 siswa dengan poin pelanggaran teringgi</h1><br>
+<table class="tabel">
+      <tr>
+            <th>Foto</th>
+            <th>NIS</th>
+            <th>Nama</th>
+            <th>Kelas</th>
+            <th>No Hp</th>
+            <th>Poin</th>
+            <th>Status</th>
+            <th>Aksi</th>
+      </tr>
+      @forelse ($pelanggars as $pelanggar)
+      <tr>
+            <td>
+                  <img src="{{ asset('storage/siswas/'.$pelanggar->image) }}" width="120px" height="120px" alt="">
+            </td>
+            <td>{{ $pelanggar->nis }}</td>
+            <td>{{ $pelanggar->name }}</td>
+            <td>{{ $pelanggar->tingkatan }} {{ $pelanggar->jurusan }} {{ $pelanggar->kelas }}</td>
+            <td>{{ $pelanggar->hp }}</td>
+            <td>{{ $pelanggar->poin_pelanggar }}</td>
+            <td>
+                  <a href="{{ route('pelanggar.show', $pelanggar->id) }}" class="btn btn-sm btn-dark">Data Pelanggaran</a>
+            </td>
+      </tr>
+      @empty
+      <tr>
+            <td>
+                  <p>data tidak ditemukan</p>
+            </td>
+            <td>
+                  <a href="{{ route('pelanggar.index') }}">Kembali</a>
+            </td>
+      </tr>
+      @endforelse
+</table>
+
+
+<br><br><br>
+
+<h1>Top 10 pelanggaran yang sering dilakukan</h1><br>
+<table class="tabel">
+      <tr>
+            <th>Nama Pelanggaran</th>
+            <th>Konsekuensi</th>
+            <th>Poin</th>
+            <th>Total Pelanggaran</th>
+      </tr>
+      @forelse ($hitung as $hit)
+      <tr>
+            <td>{{ $hit->jenis }}</td>
+            <td>{{ $hit->konsekuensi }}</td>
+            <td>{{ $hit->poin }}</td>
+            <td>{{ $hit->totals }}</td>
+      </tr>
+      @empty
+      <tr>
+            <td>
+                  <p>data tidak ditemukan</p>
+            </td>
+      </tr>
+      @endforelse
+</table>
+
+
 </body>
 
 <footer>
 
 </footer>
+
 </html>
